@@ -28,7 +28,7 @@ By default, the plugin uses `127.0.0.1` and `6379` as the default host and port 
 
 Specify `WP_REDIS_BACKEND_HOST`, `WP_REDIS_BACKEND_PORT`, and `WP_REDIS_BACKEND_DB` to set the necessary, non-default connection values for your Redis instance.
 
-== WP-CLI Commands ==
+## WP-CLI Commands ##
 
 This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp redis` namespace.
 
