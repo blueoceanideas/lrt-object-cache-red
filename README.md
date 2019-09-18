@@ -28,6 +28,29 @@ By default, the plugin uses `127.0.0.1` and `6379` as the default host and port 
 
 Specify `WP_REDIS_BACKEND_HOST`, `WP_REDIS_BACKEND_PORT`, and `WP_REDIS_BACKEND_DB` to set the necessary, non-default connection values for your Redis instance.
 
+== WP-CLI Commands ==
+
+This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp redis` namespace.
+
+    $ wp help redis
+
+    NAME
+
+      wp redis
+
+    SYNOPSIS
+
+      wp redis <command>
+
+    SUBCOMMANDS
+
+      cli         Launch redis-cli using Redis configuration for WordPress
+      debug       Debug object cache hit / miss ratio for any page URL.
+      enable      Enable WP Redis by creating the symlink for object-cache.php
+      info        Provide details on the Redis connection.
+
+Use `wp help redis <command>` to learn more about each command.
+
 ### Prefixing Cache Keys ###
 
 The constant `WP_CACHE_KEY_SALT` is provided to add a prefix to all cache keys used by the plugin. If running two single instances of WordPress from the same Redis instance, this constant could be used to avoid overlap in cache keys. Note that special handling is not needed for WordPress Multisite.
