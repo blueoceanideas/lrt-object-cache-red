@@ -247,7 +247,7 @@ class WP_Object_Cache {
 	 *
 	 * @var Redis
 	 */
-	private $redis;
+	public $redis;
 
 	/**
 	 * Track if Redis is available
@@ -435,7 +435,7 @@ class WP_Object_Cache {
 	 *
 	 * @return bool
 	 */
-	protected function can_redis() {
+	public function can_redis() {
 		return $this->redis_connected;
 	}
 

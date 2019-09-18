@@ -24,7 +24,7 @@ function wp_redis_get_info()
         return new WP_Error('lrt-redis-object-cache', 'LaRuta Redis object-cache.php file is missing from the wp-content/ directory.');
     }
 
-    if (!$wp_object_cache->is_redis_connected) {
+    if (!$wp_object_cache->can_redis()) {
         return new WP_Error('lrt-redis-object-cache', $wp_object_cache->missing_redis_message);
     }
 
