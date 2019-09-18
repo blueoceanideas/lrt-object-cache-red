@@ -24,6 +24,29 @@ The plugin supports the [Redis PECL module](http://pecl.php.net/package/redis) t
 3. Add `object-cache.php` to the `wp-content` directory. It is a drop-in file, not a plugin, so it belongs in the `wp-content` directory, not the `plugins` directory.
 4. By default, the script will connect to Redis at 127.0.0.1:6379. See the *Connecting to Redis* FAQ for further options.
 
+== WP-CLI Commands ==
+
+This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp redis` namespace.
+
+    $ wp help redis
+
+    NAME
+
+      wp redis
+
+    SYNOPSIS
+
+      wp redis <command>
+
+    SUBCOMMANDS
+
+      cli         Launch redis-cli using Redis configuration for WordPress
+      debug       Debug object cache hit / miss ratio for any page URL.
+      enable      Enable WP Redis by creating the symlink for object-cache.php
+      info        Provide details on the Redis connection.
+
+Use `wp help redis <command>` to learn more about each command.
+
 == Frequently Asked Questions ==
 
 = Connecting to Redis =
