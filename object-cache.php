@@ -8,6 +8,10 @@ if (!defined('WP_REDIS_OBJECT_CACHE')) {
     define('WP_REDIS_OBJECT_CACHE', true);
 }
 
+if (!defined('WP_REDIS_EXCLUDED_GLOBAL_GROUPS')) {
+    define('WP_REDIS_EXCLUDED_GLOBAL_GROUPS', []);
+}
+
 /**
  * Adds a value to cache.
  *
@@ -771,17 +775,13 @@ class WP_Object_Cache {
 	public function add_global_groups( $groups ) {
 		$groups = (array) $groups;
 
-
-
 		if ( $this->can_redis() ) {
-			$this->global_groups = array_unique( array_merge( $this->global_groups, $groups ) );
+			$this->global_groups = $this->filterExcludedGlobalGroups(array_unique(array_merge($this->global_groups, $groups)));
 		} else {
 			$this->no_redis_groups = array_unique( array_merge( $this->no_redis_groups, $groups ) );
 		}
 
 		$this->_global_groups = array_flip( $this->global_groups );
-
-
 	}
 
 	/**
@@ -794,4 +794,13 @@ class WP_Object_Cache {
 
 		$this->no_redis_groups = array_unique( array_merge( $this->no_redis_groups, $groups ) );
 	}
+
+	public function filterExcludedGlobalGroups($groups)
+    {
+        if (defined('WP_REDIS_EXCLUDED_GLOBAL_GROUPS') && !empty(WP_REDIS_EXCLUDED_GLOBAL_GROUPS)) {
+            $groups = \array_diff($groups, WP_REDIS_EXCLUDED_GLOBAL_GROUPS);
+        }
+
+        return $groups;
+    }
 }
