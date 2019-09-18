@@ -1,13 +1,11 @@
 <?php
-/**
- * Plugin Name: Pressjitsu Redis Object Cache
- * Author:      Pressjitsu, Inc., Eric Mann & Erick Hitter
- * Version:     1.0
- */
-
 // Check if Redis class is installed
 if ( ! class_exists( 'Redis' ) ) {
 	return;
+}
+
+if (!defined('WP_REDIS_OBJECT_CACHE')) {
+    define('WP_REDIS_OBJECT_CACHE', true);
 }
 
 /**
@@ -270,7 +268,7 @@ class WP_Object_Cache {
 	 *
 	 * @var array
 	 */
-	public $global_groups = array( 'users', 'userlogins', 'usermeta', 'site-options', 'site-lookup', 'blog-lookup', 'blog-details', 'rss' );
+	public $global_groups = array( 'site-options', 'site-lookup', 'blog-lookup', 'blog-details', 'rss' );
 
 	private $_global_groups;
 
@@ -559,7 +557,7 @@ class WP_Object_Cache {
 				$value = unserialize( $value );
 				$this->cache[ $group ][ $key ] = $value;
 			}
-			
+
 			$this->cache_hits += 1;
 
 			return is_object( $value ) ? clone $value : $value;
@@ -682,7 +680,7 @@ class WP_Object_Cache {
 		if ( in_array( $group, $this->no_redis_groups ) || ! $this->can_redis() ) {
 			return true;
 		}
-		
+
 		$value = is_numeric( $value ) ? $value : serialize( $value );
 
 		// Save to Redis
@@ -773,6 +771,8 @@ class WP_Object_Cache {
 	public function add_global_groups( $groups ) {
 		$groups = (array) $groups;
 
+
+
 		if ( $this->can_redis() ) {
 			$this->global_groups = array_unique( array_merge( $this->global_groups, $groups ) );
 		} else {
@@ -780,6 +780,8 @@ class WP_Object_Cache {
 		}
 
 		$this->_global_groups = array_flip( $this->global_groups );
+
+
 	}
 
 	/**

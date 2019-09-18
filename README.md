@@ -21,15 +21,15 @@ Specify `WP_REDIS_BACKEND_HOST`, `WP_REDIS_BACKEND_PORT`, and `WP_REDIS_BACKEND_
 
 This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp redis` namespace.
 
-    $ wp help redis
+    $ wp help lrt-redis
 
     NAME
 
-      wp redis
+      wp lrt-redis
 
     SYNOPSIS
 
-      wp redis <command>
+      wp lrt-redis <command>
 
     SUBCOMMANDS
 
@@ -38,7 +38,7 @@ This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All c
       enable      Enable WP Redis by creating the symlink for object-cache.php
       info        Provide details on the Redis connection.
 
-Use `wp help redis <command>` to learn more about each command.
+Use `wp help lrt-redis <command>` to learn more about each command.
 
 ### Prefixing Cache Keys ###
 
