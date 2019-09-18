@@ -1,20 +1,9 @@
 ## Overview
 
-A highly efficient, predictive and unit tested WordPress object cache backend that implements all available methods using the Redis PECL library.
+A modified version of https://github.com/pressjitsu/pj-object-cache-red and https://github.com/pantheon-systems/wp-redis object cache implementations
 
-# Why is this fork better?
-
-- Preloads known cache keys via a single `mget()` call with lazy unserialization
-- Further microoptimized routines makes this the **fastest** Redis object cache implementation out there
-- Unit-tested with 100% effective target coverage
-
-For more information check out https://pressjitsu.com/blog/redis-object-cache-wordpress/
-
-## Authors
-
-* Pressjitsu, Inc.
-* Eric Mann
-* Erick Hitter
+# Modifications
+- Remove all user related tables from the global group list.
 
 ## Installation
 1. Install and configure Redis. There is a good tutorial [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-debian-9).
@@ -54,7 +43,3 @@ Use `wp help redis <command>` to learn more about each command.
 ### Prefixing Cache Keys ###
 
 The constant `WP_CACHE_KEY_SALT` is provided to add a prefix to all cache keys used by the plugin. If running two single instances of WordPress from the same Redis instance, this constant could be used to avoid overlap in cache keys. Note that special handling is not needed for WordPress Multisite.
-
-## Support
-
-Support for this plugin can be had over at support@pressjitsu.com
