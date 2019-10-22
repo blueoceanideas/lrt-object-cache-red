@@ -104,9 +104,9 @@ function wp_cache_flush( $delay = 0 ) {
  *
  * @return bool|mixed             Cached object value.
  */
-function wp_cache_get( $key, $group = 'default', $force = false ) {
+function wp_cache_get( $key, $group = 'default', $force = false, &$found = null ) {
 	global $wp_object_cache;
-	return $wp_object_cache->get( $key, $group, $force );
+	return $wp_object_cache->get( $key, $group, $force, $found );
 }
 
 /**
@@ -548,7 +548,7 @@ class WP_Object_Cache {
 	 * @param   string        $group      The group value appended to the $key.
 	 * @return  bool|mixed                Cached object value.
 	 */
-	public function get( $_key, $group = 'default', $force = false ) {
+	public function get( $_key, $group = 'default', $force = false, &$found = null ) {
 		list( $key, $redis_key ) = $this->build_key( $_key, $group );
 
 		$this->to_preload[ $group ][ $_key ] = true;
@@ -562,12 +562,15 @@ class WP_Object_Cache {
 				$this->cache[ $group ][ $key ] = $value;
 			}
 
+
+            $found = true;
 			$this->cache_hits += 1;
 
 			return is_object( $value ) ? clone $value : $value;
 		}
 
 		if ( in_array( $group, $this->no_redis_groups ) || ! $this->can_redis() ) {
+            $found = false;
 			$this->cache_misses += 1;
 			return false;
 		}
@@ -576,6 +579,7 @@ class WP_Object_Cache {
 		$value = $this->redis->get( $redis_key );
 
 		if ( ! is_string( $value ) ) {
+            $found = false;
 			$this->cache[ $group ][ $key ] = false;
 			$this->cache_misses += 1;
 			return false;
@@ -584,6 +588,8 @@ class WP_Object_Cache {
 		$value = is_numeric( $value ) ? $value : unserialize( $value );
 		$this->cache[ $group ][ $key ] = $value;
 		$this->cache_hits += 1;
+        $found = true;
+
 		return $value;
 	}
 
