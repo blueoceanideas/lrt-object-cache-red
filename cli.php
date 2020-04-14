@@ -72,11 +72,10 @@ class WP_Redis_CLI_Command
         if (file_exists($drop_in)) {
             WP_CLI::error('Unknown wp-content/object-cache.php already exists.');
         }
-        $object_cache = dirname(__FILE__) . '/object-cache.php';
-        $target = self::get_relative_path($drop_in, $object_cache);
+        $object_cache = __DIR__ . '/object-cache.php';
         chdir(WP_CONTENT_DIR);
         // @codingStandardsIgnoreStart
-        if (symlink($target, 'object-cache.php')) {
+        if (symlink($object_cache, 'object-cache.php')) {
             // @codingStandardsIgnoreEnd
             WP_CLI::success('Enabled LaRuta Redis by creating wp-content/object-cache.php symlink.');
         } else {
