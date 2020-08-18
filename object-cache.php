@@ -819,5 +819,6 @@ class WP_Object_Cache {
 
         return $groups;
     }
-
+}
+    
 endif;
