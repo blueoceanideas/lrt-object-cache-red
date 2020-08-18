@@ -1,12 +1,21 @@
 <?php
-// Check if Redis class is installed
-if ( ! class_exists( 'Redis' ) ) {
-	return;
-}
+/**
+ * Plugin Name: Pressjitsu Redis Object Cache
+ * Plugin URI:  https://github.com/pressjitsu/pj-object-cache-red
+ * Version:     1.2
+ * Author:      Pressjitsu, Inc.
+ * Author URI:  https://pressjitsu.com
+ * https://github.com/pressjitsu/pj-object-cache-red
+ * Description: A fork of the most popular implementation by Eric Mann & Erick Hitter but with a performance twist - preloading!
+ * License:     GPLv3
+ * License URI: https://www.gnu.org/licenses/quick-guide-gplv3.html
+ */
 
-if (!defined('WP_REDIS_OBJECT_CACHE')) {
-    define('WP_REDIS_OBJECT_CACHE', true);
-}
+/**
+ * Check if Redis class is installed and caching is not disabled.
+ * If false, prevent functions and classes from being defined.
+ */
+if ( class_exists( 'Redis' ) && ( ! defined( 'WP_REDIS_DISABLED' ) || ! WP_REDIS_DISABLED ) ):
 
 if (!defined('WP_REDIS_EXCLUDED_GLOBAL_GROUPS')) {
     define('WP_REDIS_EXCLUDED_GLOBAL_GROUPS', []);
@@ -562,7 +571,6 @@ class WP_Object_Cache {
 				$this->cache[ $group ][ $key ] = $value;
 			}
 
-
             $found = true;
 			$this->cache_hits += 1;
 
@@ -584,6 +592,8 @@ class WP_Object_Cache {
 			$this->cache_misses += 1;
 			return false;
 		}
+
+		$found = true;
 
 		$value = is_numeric( $value ) ? $value : unserialize( $value );
 		$this->cache[ $group ][ $key ] = $value;
@@ -809,4 +819,5 @@ class WP_Object_Cache {
 
         return $groups;
     }
-}
+
+endif;
